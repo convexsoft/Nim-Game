@@ -7,7 +7,8 @@ const gameSchema = new Schema({
     weight: [[{type:Number}]],
     createdAt: {type: Date, default: Date.now},
     gamerType: Number,
-    algoType: Number
+    algoType: Number,
+    win: Boolean
 });
 
 module.exports = mongoose.model('Game', gameSchema);

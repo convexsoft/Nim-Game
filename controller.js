@@ -1,19 +1,17 @@
 var Game = require('./model');
-
 var async = require('async');
-
+var Bot = require('./gameBot');
 
 exports.getStatus = (req,res) =>{
     console.log(req.query);
     Game.findOne(req.query,{},{sort:{'createdAt': -1}}, (err,results)=>{
-        console.log(results);
         if(results === null){
             let newWeight = [];
-            for(var i = 3;i <12; i++){
+            newWeight.push([1,0,0]); // One stone left
+            newWeight.push([1,1,0]); // Two stone left
+            for(var i = 3;i <=12; i++){
                 newWeight.push([1,1,1]);
             }
-            newWeight.push([1,1,0]);
-            newWeight.push([1,0,0]);
             res.send({weight: newWeight});
             return;
         }
@@ -22,14 +20,40 @@ exports.getStatus = (req,res) =>{
 }
 
 exports.storeGame = (req,res) =>{
-    // var game = new Game({
-    //     first: false,
-    //     gameBoard: [0.1,0.1,0.1,1,1,1,1,1,1],
-    //     weight: [[1,2,3],[4,5,6],[7,8,9]],
-    //     gamerType: 1,
-    //     algoType: 1
-    // });
-    // game.save((err)=>{
-    //    console.log("Store Succeed");
-    // });
+    let tmp;
+    for(var i=0;i<12;i++){
+        tmp = req.query["weight"][i];
+        tmp= tmp.slice(1,tmp.length-1).split(",");
+        req.query["weight"][i] = tmp;
+    }
+    console.log(req.query["weight"]);
+
+    var game = new Game(req.query);
+    game.save((err)=>{
+        if(err) console.log(err);
+        res.send("Store Succeed");
+    });
+}
+
+exports.getAllResults = (req, res) =>{
+    const gameResult = [];
+    Game.find({algoType:1, gamerType:1}).sort({createdAt: 1}).exec((err,docs) => {
+        for(var i=0;i<docs.length;i++){
+            gameResult[i] = {};
+            gameResult[i].id = i;
+            gameResult[i].status = docs[i]["win"];
+        }
+        res.json(gameResult);
+    })
+    // console.log(games);
+}
+
+exports.passResults = (req, res) => {
+    let status = JSON.parse(req.query["data"]);
+    // console.log(status);
+    // console.log("test");
+    let record = Bot.weightUpdate(status);
+    Bot.storeGame(record);
+
+    res.send("Update Succeed");
 }

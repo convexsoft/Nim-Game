@@ -1,7 +1,8 @@
 ### The Game Model
 
 ```
-    first: Boolean, // True means the player goes first, otherwise AI goes first
+    first: Boolean, // True means the AI goes first, otherwise player goes first
+    win: Boolean, // True means the AI wins, otherwise player wins
     gameBoard: [], // Store the game board
     Weight: [], // The updated weight data
     createdAt: {type: Date, default: Date.now},

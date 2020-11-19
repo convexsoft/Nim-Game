@@ -1,7 +1,9 @@
-var express = require('express');
-var app = express();
-var game = require('./model');
-var game_controller = require('./controller');
+const express = require('express');
+const cors = require('cors');
+const path = require('path');
+const app = express();
+const game = require('./model');
+const game_controller = require('./controller');
 
 const mongoose = require('mongoose');
 
@@ -11,8 +13,19 @@ mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
+
+app.use(express.static(path.join(__dirname, 'build')));
+
+app.get('/', function (req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
+
+app.use(cors());
 // Router
 app.get('/getStatus',game_controller.getStatus);
 app.get('/storeGame',game_controller.storeGame);
+app.get('/passResults', game_controller.passResults);
+app.post('/getAllResults', game_controller.getAllResults);
 
-app.listen(3000);
+app.listen(3032);
