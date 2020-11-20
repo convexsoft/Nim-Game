@@ -1,6 +1,7 @@
 var Game = require('./model');
 var async = require('async');
 var Bot = require('./gameBot');
+const COIN_NUM = 13;
 
 exports.getStatus = (req,res) =>{
     console.log(req.query);
@@ -9,7 +10,7 @@ exports.getStatus = (req,res) =>{
             let newWeight = [];
             newWeight.push([1,0,0]); // One stone left
             newWeight.push([1,1,0]); // Two stone left
-            for(var i = 3;i <=12; i++){
+            for(var i = 3;i <=COIN_NUM; i++){
                 newWeight.push([1,1,1]);
             }
             res.send({weight: newWeight});
@@ -21,7 +22,7 @@ exports.getStatus = (req,res) =>{
 
 exports.storeGame = (req,res) =>{
     let tmp;
-    for(var i=0;i<12;i++){
+    for(var i=0;i<COIN_NUM;i++){
         tmp = req.query["weight"][i];
         tmp= tmp.slice(1,tmp.length-1).split(",");
         req.query["weight"][i] = tmp;

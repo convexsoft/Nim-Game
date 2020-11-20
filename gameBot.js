@@ -1,4 +1,5 @@
 const axios = require('axios');
+const COIN_NUM = 13;
 
 // Using the algorithm in https://www.i-am.ai/build-your-own-ai.html
 exports.weightUpdate = (gameStatus) => {
@@ -9,15 +10,11 @@ exports.weightUpdate = (gameStatus) => {
     res["win"] =  gameStatus["win"];
     res["first"] =  gameStatus["first"];
     res["weight"] = gameStatus["gameWeight"];
-<<<<<<< Updated upstream
-
-=======
     res["playerID"] = gameStatus["playerID"];
->>>>>>> Stashed changes
     let flag = true;
     let pos = res["gameBoard"].length - 1;
     let coins = [];
-    coins[0] = 12;
+    coins[0] = COIN_NUM;
     for(var i = 1;i<pos+1;i++)
         coins[i] = coins[i-1] - res["gameBoard"][i-1];
     while(res["win"]===false && flag && pos>0){

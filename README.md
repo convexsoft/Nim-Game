@@ -1,5 +1,8 @@
 ### The Game Model
 
+Rule: 13 lollipops, and the player who takes the last one lose this game. The users should always goes first.
+
+
 ```
     first: Boolean, // True means the AI goes first, otherwise player goes first
     win: Boolean, // True means the AI wins, otherwise player wins
@@ -10,4 +13,3 @@
     algoType: Number // Default is 1,
     playerID: The unique player ID
 ```
-

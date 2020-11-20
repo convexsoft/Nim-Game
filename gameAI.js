@@ -1,5 +1,6 @@
 const axios = require('axios');
 const BASE_URL = '';
+const COIN_NUM = 13;
 
 async function getStatus(gamerType, algoType){
     let gameWeight = [];
@@ -37,7 +38,7 @@ async function storeGame(gameStatus){
 }
 
 function gamePlay(gameWeight){
-    let coins = 12;
+    let coins = COIN_NUM;
     let gameBoard = [];
     let first = Math.random()< 0.5? true : false;
     let player = 0, AI = 0;
@@ -82,7 +83,7 @@ function weightUpdate(gameStatus, gameWeight){
 
     // Back Prop Algorithm ?
     // let weight = gameStatus["win"]? 0 : -1;
-    // let coins = 12;
+    // let coins = COIN_NUM;
     // let first = gameStatus["first"];
     // let pos = 0;
     // while(coins>0){
@@ -100,7 +101,7 @@ function weightUpdate(gameStatus, gameWeight){
     let flag = true;
     let pos = gameStatus["gameBoard"].length - 1;
     let coins = [];
-    coins[0] = 12;
+    coins[0] = COIN_NUM;
     for(var i = 1;i<pos+1;i++)
         coins[i] = coins[i-1] - gameStatus["gameBoard"][i-1];
     while(!gameStatus["win"] && flag && pos>0){

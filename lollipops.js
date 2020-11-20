@@ -25,7 +25,7 @@ const start = (say, sendButton, userID) => {
     .then((result) => {
 		gameWeight = result.data;
 		payload["gameWeight"] = gameWeight["weight"];
-		payload["coins"] = 12;
+		payload["coins"] = 13;
 		payload["gameBoard"] = [];
 		payload["player"] = false;
 		payload["playerID"] = userID;
@@ -36,9 +36,10 @@ const start = (say, sendButton, userID) => {
 		let payload_no = JSON.parse(JSON.stringify(payload));
 		payload_no["first"] = true;
 
-		const str = lollipopStr(12);	
+		const str = lollipopStr(13);	
 		say(str).then(() => {
-			sendButton('would you like to pick first?', [{title: 'Yes', payload: JSON.stringify(payload_yes)}, {title: 'No', payload: JSON.stringify(payload_no)}]);
+			// sendButton('would you like to pick first?', [{title: 'Yes', payload: JSON.stringify(payload_yes)}, {title: 'No', payload: JSON.stringify(payload_no)}]);
+			sendButton('Are you ready to pick first?', [{title: 'Yes', payload: JSON.stringify(payload_yes)}]);
 		});
     })
     .catch((err) => { say("Sorry, the server is down." )});
@@ -137,7 +138,7 @@ module.exports = {
 	title: 'Fish-Flavored Lollipops',
 	introduction: [
 		'Fish-Flavored Lollipops is a variant of Nim, an ancient math puzzle.',
-		'When the game starts, I will show you 12 lollipops, where the last one of them is fish-flavored. It tastes so disgusting that nobody wants to eat it.',
+		'When the game starts, I will show you 13 lollipops, where the last one of them is fish-flavored. It tastes so disgusting that nobody wants to eat it.',
 		'The lollipops will be placed in one line, and you and I will take turns to take lollipops from the row. You can\'t take more than 3 lollipops at a time, and you can\'t skip your turn. Whoever takes the last lollipop (the fish-flavored one) lose the game.'
 	],
 	start: start,
