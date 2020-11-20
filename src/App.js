@@ -15,7 +15,11 @@ class Game extends React.Component {
         let chartData = [];
         chartData[0] = ['x','winning times'];
         chartData[1] = [0,0];
+<<<<<<< Updated upstream
         fetch("http://localhost:3032/getAllResults",{
+=======
+        fetch("http://104.199.174.234:3032/getAllResults",{
+>>>>>>> Stashed changes
             method: 'POST'
         })
             .then(res => res.text())

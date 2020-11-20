@@ -9,7 +9,11 @@ exports.weightUpdate = (gameStatus) => {
     res["win"] =  gameStatus["win"];
     res["first"] =  gameStatus["first"];
     res["weight"] = gameStatus["gameWeight"];
+<<<<<<< Updated upstream
 
+=======
+    res["playerID"] = gameStatus["playerID"];
+>>>>>>> Stashed changes
     let flag = true;
     let pos = res["gameBoard"].length - 1;
     let coins = [];

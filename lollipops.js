@@ -10,7 +10,7 @@ const ranInt = (min, max) => {
 	return Math.floor(Math.random() * (max - min)) + min;
 };
 
-const start = (say, sendButton) => {
+const start = (say, sendButton, userID) => {
 	let gameWeight = {};
 	let payload = {};
 	axios ({
@@ -28,7 +28,7 @@ const start = (say, sendButton) => {
 		payload["coins"] = 12;
 		payload["gameBoard"] = [];
 		payload["player"] = false;
-
+		payload["playerID"] = userID;
 		let payload_yes = JSON.parse(JSON.stringify(payload)); // Player Goes First
 		payload_yes["first"] = false;
 		payload_yes["player"] = true;
@@ -123,9 +123,9 @@ const state = (payload, say, sendButton) => {
 		})
 		.then((result) => {
 			if(playerTurn === true){
-				say("Congratulations! You have forced me to take the last lollipop! Thanks for training our AI.").then(() => {sendButton('Play again?', [{title: 'Yes!', payload: 'restart'},'No']);});
+				say("Congratulations! You have forced me to take the last lollipop! Thanks for training our AI. See all results at : http://algebragamification.com:3032/ ").then(() => {sendButton('Play again?', [{title: 'Yes!', payload: 'restart'},'No']);});
 			} else {
-				say("You\'ve taken the last lollipop and lose! Thanks for training our AI.").then(() => {sendButton('Play again?', [{title: 'Yes!', payload: 'restart'},'No']);});
+				say("You\'ve taken the last lollipop and lose! Thanks for training our AI. See all results at : http://algebragamification.com:3032/ ").then(() => {sendButton('Play again?', [{title: 'Yes!', payload: 'restart'},'No']);});
 			}
 		})
 		.catch((err) => { say("Sorry, the server is down." )});
