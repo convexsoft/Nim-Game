@@ -28,6 +28,7 @@ exports.weightUpdate = (gameStatus) => {
 }
 
 exports.storeGame = async (gameStatus) =>{
+    let res;
     await axios ({
         method: 'get',
         baseURL: 'http://localhost:3032',
