@@ -66,10 +66,10 @@ class game extends React.Component {
         } else {
             let weightRank = [weight[coins - 1][0], weight[coins - 1][1], weight[coins - 1][2]];
             let sum = Math.random() * (weightRank[0] + weightRank[1] + weightRank[2]);
-            for (var i = 0; i < 3; i++) {
-                sum -= weightRank[i];
+            for (var j = 0; j < 3; j++) {
+                sum -= weightRank[j];
                 if (sum <= 0) {
-                    step = i + 1;
+                    step = j + 1;
                     break;
                 }
             }
@@ -144,6 +144,10 @@ class game extends React.Component {
             <div className="container">
                 <div className="game">
                    <h3> You can play Nim game here </h3>
+                    <h5> Rules: </h5>
+                    <p>Fish-Flavored Lollipops is a variant of Nim, an ancient math puzzle.</p>
+                    <p>When the game starts, I will show you 13 lollipops, where the last one of them is fish-flavored. It tastes so disgusting that nobody wants to eat it.</p>
+                    <p>The lollipops will be placed in one line, and you and I will take turns to take lollipops from the row. You can't take more than 3 lollipops at a time, and you can't skip your turn. Whoever takes the last lollipop (the fish-flavored one) lose the game.</p>
                     <h1> {status} &nbsp; </h1>
                     <h5> {desc} </h5>
                     <h5> {test} </h5>

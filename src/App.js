@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from './components/navbar';
 import Gamestatus from './components/gamestatus';
 import Game from './components/game';
-import {BrowserRouter, Route, Router} from 'react-router-dom'
+import {BrowserRouter, Route} from 'react-router-dom'
 
 const PrimaryLayout = () => (
     <main>

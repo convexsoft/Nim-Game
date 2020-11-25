@@ -36,7 +36,7 @@ class gameStatus extends React.Component {
             <div className="game">
                 <div className="container">
                     <div className="gameInfo">
-                        <p> Rules: </p>
+                        <p> Play it on Nemobot APP</p>
                     </div>
                 </div>
                 <div className="container">
