@@ -55,6 +55,10 @@ exports.passResults = (req, res) => {
     // console.log("test");
     let record = Bot.weightUpdate(status);
     Bot.storeGame(record);
+    res.send("Update Succeed");
+}
 
+exports.saveResults = (req, res) => {
+    console.log(req.query);
     res.send("Update Succeed");
 }

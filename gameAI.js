@@ -26,7 +26,7 @@ async function storeGame(gameStatus){
     await axios ({
         method: 'get',
         baseURL: 'http://localhost:3032',
-        url: '/storeGame',
+        url: '/storeGame1',
         'Content-Type': 'application/json',
         params: gameStatus
     })

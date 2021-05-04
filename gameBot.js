@@ -14,6 +14,7 @@ exports.weightUpdate = (gameStatus) => {
     let flag = true;
     let pos = res["gameBoard"].length - 1;
     let coins = [];
+
     coins[0] = COIN_NUM;
     for(var i = 1;i<pos+1;i++)
         coins[i] = coins[i-1] - res["gameBoard"][i-1];

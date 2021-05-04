@@ -10,6 +10,9 @@ function navbar(props){
                     <li className="nav-item active">
                         <a className="nav-link" href="/play"> Play </a>
                     </li>
+                    <li className="nav-item active">
+                        <a className="nav-link" href="/AI">AI</a>
+                    </li>
                 </ul>
             </div>
         </nav>
