@@ -1,8 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const 
-app = express();
+const app = express();
 const game = require('./model');
 const game_controller = require('./controller');
 
@@ -17,6 +16,12 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 app.use(express.static(path.join(__dirname, 'build')));
 
 app.get('/', function (req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+app.get('/play', function (req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+app.get('/AI', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
