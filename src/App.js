@@ -6,6 +6,7 @@ import Game from './components/game';
 import AI from './components/AI';
 import {BrowserRouter, Route} from 'react-router-dom'
 
+
 const PrimaryLayout = () => (
     <main>
         <BrowserRouter>

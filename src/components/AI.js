@@ -312,7 +312,6 @@ class AI extends React.Component {
                         {/* TODO: change to for loop */}
                         {/* TODO: pickup should be smaller than lollipops */}
                         <FormControl style={{minWidth: 180}}>
-                            {/* <p>Number of Lollipops: </p> */}
                             <InputLabel htmlFor="lollipopsNo">Number of Lollipops</InputLabel>
                             <Select
                             native
