@@ -110,7 +110,7 @@ class AI extends React.Component {
         let pickup = this.state.pickup;
         let AI = this.state.AI;
         let algo = this.state.algo;
-        let val = AI ? this.state.addWeight : this.state.minusWeight; //if AI wins, val is addWeight; otherwies, val is minusWeight.
+        let val = AI ? this.state.addWeight : this.state.minusWeight; //if AI wins, val is addWeight; otherwise, val is minusWeight.
         let coins = [];
         let pos = gameBoard.length - 1;
         coins[0] = this.state.coins;
@@ -182,7 +182,9 @@ class AI extends React.Component {
             console.log('AI random pick: ',res);
         } else { //optimal 
             res = (coins - 1) % (pickup + 1);
-            if(res === 0) res = 1; //the lost situation
+            if(res === 0) {
+                res = 1 + Math.floor(Math.random() * mxpickup);
+            } //the lost situation
             console.log('AI optimal pick: ',res);
         }
         return res;

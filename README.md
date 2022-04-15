@@ -11,7 +11,7 @@ pile, and the player who takes the last stone loses the game.
 
 ![Nim Game](nimgame4.png)
 
-Training process showing the number of game trials needed for our Nim game AI
+The figure illustrates the training process and the number of game trials needed for our Nim game AI
 to learn a skillful strategy using a single-layer neural network and crowdsourcing.
 ## Citing
 
