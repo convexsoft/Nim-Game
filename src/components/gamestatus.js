@@ -97,7 +97,7 @@ class gameStatus extends React.Component {
                         <div className="container">
                             <div className="AI-demo1">
                                 <h3> Previous Result</h3>
-                                <p>The line graph below shows the previous game result from Nemobot crowdsourced from ninety-eight students during the period 2020.10 - 2021.12.</p>
+                                <p>The line graph below shows the previous game result from Nemobot. Crowdsourced from ninety-eight students during the period 2020.10 - 2021.12.</p>
                                 <Chart
                                     chartType="LineChart"
                                     loader={<div>Loading Chart</div>}
@@ -114,7 +114,7 @@ class gameStatus extends React.Component {
                 <Box maxWidth="100%" style={{margin:"40px"}}>
                     <div className="container">
                         <h1 align="center" style={{padding:"40px"}}>One Player Trained AI</h1>
-                        <p>The line graphs below show the game results where the game AI trained by a human who used the optimal play strategy. </p>
+                        <p>The line graphs below show the game results where the game AI trained by one human player who used the optimal play strategy. </p>
                         <Chart
                             chartType="LineChart"
                             loader={<div>Loading Chart</div>}

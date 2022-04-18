@@ -31,7 +31,7 @@ class AI extends React.Component {
         }
 
         let chart = [];
-        chart[0] = ['x', 'winning times'];
+        chart[0] = ['x', 'Ai\'s Training Outcome'];
         chart[1] = [0,0];
 
         this.state = {

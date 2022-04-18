@@ -10,7 +10,7 @@ class game extends React.Component {
             weight.push([1,1,1]);
         }
         let chart = [];
-        chart[0] = ['x','winning times'];
+        chart[0] = ['x','Ai\'s Training Outcome'];
         chart[1] = [0,0];
 
         this.state = {
@@ -113,6 +113,15 @@ class game extends React.Component {
         })
     }
 
+    options = {
+        hAxis: {
+            title: "Number of Games Played",
+        },
+        vAxis: {
+            title: "Number of Games Won by AI",
+        },
+    }
+
     render() {
         let status = "";
         let coins = this.state.coins;
@@ -165,6 +174,7 @@ class game extends React.Component {
                                 width="100%"
                                 height="400px"
                                 legendToggle
+                                options={this.options}
                             />
                         </div>
                     </div>
