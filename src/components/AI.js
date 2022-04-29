@@ -30,6 +30,8 @@ class AI extends React.Component {
             weight.push([1,1,1]);
         }
 
+        let AIweight = JSON.parse(JSON.stringify(weight));
+
         let chart = [];
         chart[0] = ['x', 'Ai\'s Training Outcome'];
         chart[1] = [0,0];
@@ -41,6 +43,7 @@ class AI extends React.Component {
             weight: weight,
             addWeight: 0,
             minusWeight: -1,
+            opponent: 0,
 
             tmpcoins: 13,
             tmppickup: 3,
@@ -48,6 +51,7 @@ class AI extends React.Component {
             tmpweightvalue: 1,
             tmpaddvalue: 0,
             tmpminusvalue: -1,
+            tmpopponent: 0,
 
             coinstatus: 13,
             AI: false,
@@ -55,6 +59,8 @@ class AI extends React.Component {
             win: 0,
             lose: 0,
             finished: false,
+            flag: false,  // flag for the first time
+            AIweight: AIweight,
             speed: 1,
             randomPercentage: 5,
             gameBoard: [],
@@ -70,9 +76,13 @@ class AI extends React.Component {
         let weightvalue = this.state.tmpweightvalue;
         let addWeight = this.state.tmpaddvalue;
         let minusWeight = this.state.tmpminusvalue;
+        let opponent = this.state.tmpopponentvalue;
+
         let weight = []; 
         let tmp = [];
         let chart = [];
+        // let AIweight = [];
+
         chart[0] = ['x', 'winning times'];
         chart[1] = [0,0];
         var i;
@@ -85,7 +95,22 @@ class AI extends React.Component {
         }
         for(i = pickup;i<coins;i++)
             weight.push(Array.from(tmp));
-        
+
+        let AIweight = JSON.parse(JSON.stringify(weight));
+        // for(i=0; i<pickup; i++){
+        //     tmp[i] = 0;
+        // }
+        // for(i=0; i<pickup; i++){
+        //     tmp[i] = 1;
+        //     AIweight.push(Array.from(tmp));
+        // }
+        // for(i=pickup; i<coins; i++)
+        //     AIweight.push(Array.from(tmp));
+
+        if(this.state.start === true){
+            this.stop();
+        }
+
         this.setState({
             coins: coins,
             coinstatus: coins,
@@ -94,15 +119,48 @@ class AI extends React.Component {
             weight: weight,
             addWeight: addWeight,
             minusWeight: minusWeight,
+            opponent: opponent,
             chart: chart,
             gameBoard: [],
             AI: false,
+            AIweight: AIweight,
             win: 0,
             lose: 0,
             finished: false,
+            flag: false,
             start: false
         })
+
     };
+
+    update(pos, gameBoard, coins, weight, pickup, val, algo){
+        let tmpcount;
+        var i;
+        while(pos>0){
+            tmpcount = 0;
+            for(i = 0; i<pickup; i++){
+                if(weight[coins[pos] - 1][i]>0){
+                    tmpcount += 1;
+                }
+            }
+            if(val<0){ //AI lose the game
+                if(tmpcount === 1) {
+                    pos -= 2;
+                    continue;
+                }
+                weight[coins[pos] - 1][gameBoard[pos] - 1] += val;
+                if(weight[coins[pos] - 1][gameBoard[pos] - 1]<0) weight[coins[pos] - 1][gameBoard[pos] - 1] = 0;
+            }
+            if(val>0){ //AI wins the game
+                weight[coins[pos] - 1][gameBoard[pos] - 1] += val;
+            }
+            if(algo===1){
+                break;
+            }
+            pos -= 2;
+        }
+        return weight;
+    }
 
     updateWeight(){
         let gameBoard = this.state.gameBoard;
@@ -111,48 +169,31 @@ class AI extends React.Component {
         let AI = this.state.AI;
         let algo = this.state.algo;
         let val = AI ? this.state.addWeight : this.state.minusWeight; //if AI wins, val is addWeight; otherwise, val is minusWeight.
+        let AIval = AI ? this.state.minusWeight : this.state.addWeight; //Opposite AI's val
+        let opposite = this.state.opponent;
+        let AIweight = this.state.AIweight;
         let coins = [];
         let pos = gameBoard.length - 1;
         coins[0] = this.state.coins;
         var i;
         for(i=1; i<=pos; i++)
             coins[i] = coins[i-1] - gameBoard[i-1];
-        if(AI) pos -= 1; //Last step of AI.
-        let tmpcount;
 
         console.log(gameBoard);
         console.log(coins);
 
-        while(pos>0){
-            tmpcount = 0;
-            for(i = 0; i<pickup; i++){
-                if(weight[coins[pos] - 1][i]>0){
-                    tmpcount += 1;
-                }
-            }
-            if(val<0){
-                if(tmpcount === 1) {
-                    pos -= 2;
-                    continue;
-                }
-                weight[coins[pos] - 1][gameBoard[pos] - 1] += val;
-                if(weight[coins[pos] - 1][gameBoard[pos] - 1]<0) weight[coins[pos] - 1][gameBoard[pos] - 1] = 0;
-            }
-            if(val>0){
-                weight[coins[pos] - 1][gameBoard[pos] - 1] += val;
-            }
-            if(algo===1){
-                break;
-            }
-            pos -= 2;
+        //
+        if(AI) {//AI wins means the opposite take the last lollipop.
+           weight = this.update(pos-1, gameBoard, coins, weight, pickup, val, algo);
+             if(opposite) AIweight = this.update(pos, gameBoard, coins, AIweight, pickup, AIval, algo);
+        } else {
+           weight = this.update(pos, gameBoard, coins, weight, pickup, val, algo);
+             if(opposite) AIweight = this.update(pos-1, gameBoard, coins, AIweight, pickup, AIval, algo);
         }
-        this.setState({weight:weight});
+        this.setState({weight:weight, AIweight:AIweight});
     }
 
-    AIStep(){
-        let coins = this.state.coinstatus;
-        let weight = this.state.weight[coins - 1];
-        let pickup = this.state.pickup;
+    step(weight, coins, pickup){
         let weightsum = 0;
         var i;
         for(i=0;i<pickup;i++){
@@ -167,7 +208,15 @@ class AI extends React.Component {
                 break;
             }
         }
+        console.log("This step: ", step);
         return step;
+    }
+
+    AIStep(){
+        let coins = this.state.coinstatus;
+        let weight = this.state.weight[coins - 1];
+        let pickup = this.state.pickup;
+        return this.step(weight, coins, pickup);
     }
 
     playerStep(){
@@ -177,6 +226,9 @@ class AI extends React.Component {
         let rand = this.state.randomPercentage;
         let tmprand = Math.floor(Math.random() * 10);
         let res = 1;
+        if(this.state.opponent){
+            return this.step(this.state.AIweight[coins - 1], coins, pickup);
+        }
         if(tmprand < rand){ //random
             res = 1 + Math.floor(Math.random() * mxpickup);
             console.log('AI random pick: ',res);
@@ -232,6 +284,7 @@ class AI extends React.Component {
             else prevval -= 1;
             chart.push([previd, prevval]);
             this.updateWeight();
+
             coinstatus = this.state.coins;
             finished = false;
             AI = false; //Each game should always let player goes first
@@ -269,7 +322,7 @@ class AI extends React.Component {
         } else {
             this.stop();
         }
-        this.setState({start:start});
+        this.setState({start:start, flag:true});
     };
 
     handleChange = (event, value) => {
@@ -281,6 +334,7 @@ class AI extends React.Component {
       };
 
     handleClick = (event, val) =>{
+        // Click the Set Value button
         if(val==="val1"){
             this.reset();
         }
@@ -294,8 +348,13 @@ class AI extends React.Component {
         let coins = this.state.coinstatus;
         for(let i=0;i<coins;i++)
             status += ("🍭");
-        let gameStatus = this.state.start ? "Stop" : "Start";
+        let gameStatus = this.state.start ? "Pause" : "Resume";
+        if(this.state.flag === false){
+            gameStatus = "Start";
+        }
         let weight = this.state.weight;
+        const opponent = this.state.opponent;
+
         return (
             <Container>
                 <Container>
@@ -313,7 +372,7 @@ class AI extends React.Component {
 
                         {/* TODO: change to for loop */}
                         {/* TODO: pickup should be smaller than lollipops */}
-                        <FormControl style={{minWidth: 180}}>
+                        <FormControl style={{minWidth: 180, marginBottom: "5px"}}>
                             <InputLabel htmlFor="lollipopsNo">Number of Lollipops</InputLabel>
                             <Select
                             native
@@ -332,8 +391,8 @@ class AI extends React.Component {
                             </Select>
                         </FormControl>
 
-                        <FormControl style={{minWidth: 180}}>
-                            <InputLabel htmlFor="pickupSelect">Maxmal Pickup Number</InputLabel>
+                        <FormControl style={{minWidth: 180, marginBottom: "5px"}}>
+                            <InputLabel htmlFor="pickupSelect">Maximal Pickup Number</InputLabel>
                             <Select
                             native
                             value={this.state.tmppickup}
@@ -350,7 +409,7 @@ class AI extends React.Component {
                             </Select>
                         </FormControl>
 
-                        <FormControl style={{minWidth: 180}}>
+                        <FormControl style={{minWidth: 180, marginBottom: "5px"}}>
                             <InputLabel htmlFor="pickupAlgorithm">Algorithm</InputLabel>
                             <Select
                             native
@@ -366,7 +425,7 @@ class AI extends React.Component {
                             </Select>
                         </FormControl>
 
-                        <FormControl style={{minWidth: 180}}>
+                        <FormControl style={{minWidth: 180, marginBottom: "5px"}}>
                             <InputLabel htmlFor="AddWeight">Initial Weight:</InputLabel>
                             <Select
                                 native
@@ -383,7 +442,7 @@ class AI extends React.Component {
                             </Select>
                         </FormControl>
 
-                        <FormControl style={{minWidth: 180}}>
+                        <FormControl style={{minWidth: 180, marginBottom: "5px"}}>
                             <InputLabel htmlFor="AddWeight">Add Reward Weight:</InputLabel>
                             <Select
                                 native
@@ -401,7 +460,7 @@ class AI extends React.Component {
                             </Select>
                         </FormControl>
 
-                        <FormControl style={{minWidth: 180}}>
+                        <FormControl style={{minWidth: 180, marginBottom: "5px"}}>
                             <InputLabel htmlFor="AddWeight">Add Punish Weight:</InputLabel>
                             <Select
                                 native
@@ -419,28 +478,50 @@ class AI extends React.Component {
                             </Select>
                         </FormControl>
 
+                        <FormControl style={{minWidth: 180, marginBottom: "5px"}}>
+                            <InputLabel htmlFor="AddWeight">Opponent</InputLabel>
+                            <Select
+                                native
+                                value={this.state.tmpopponentvalue}
+                                onChange={(e)=>{this.setState({tmpopponentvalue:parseInt(e.target.value)});}}
+                                inputProps={{
+                                    name:'opponent',
+                                    id: 'opponent'
+                                }}
+                            >
+                                <option value={0}>Optimal / Random Game AI</option>
+                                <option value={1}>The Same Game AI</option>
+                            </Select>
+                        </FormControl>
+
                         <div>
-                        <Button variant="contained" color="primary" onClick={(event) => this.handleClick(event,"val1")}> SetValue </Button>
+                        <Button variant="contained" color="primary" onClick={(event) => this.handleClick(event,"val1")} style={{marginTop:"10px", marginBottom:"30px"}}> SetValue </Button>
                         </div>
 
-                        <Typography id="discrete-slider-random" gutterBottom>
-                            Random Percentage (AI: Optimal -> Random)
-                        </Typography>
-                        <Slider
-                            onChange={(e,val)=>{
-                                this.setState({
-                                    randomPercentage: val
-                                });
-                            }}
-                            defaultValue={5}
-                            getAriaValueText={this.valuetext1}
-                            aria-labelledby="discrete-slider"
-                            valueLabelDisplay="auto"
-                            step={1}
-                            marks
-                            min={0}
-                            max={10}
-                        />
+                        {(() => {
+                            if(opponent === 0){
+                            return <div>
+                                <Typography id="discrete-slider-random" gutterBottom>
+                                Random Percentage (AI: Optimal -> Random)
+                                </Typography>
+                                <Slider
+                                    onChange={(e,val)=>{
+                                        this.setState({
+                                            randomPercentage: val
+                                        });
+                                    }}
+                                    defaultValue={5}
+                                    getAriaValueText={this.valuetext1}
+                                    aria-labelledby="discrete-slider"
+                                    valueLabelDisplay="auto"
+                                    step={1}
+                                    marks
+                                    min={0}
+                                    max={10}
+                                />
+                            </div>
+                            }})()}
+
                     <Typography id="discrete-slider-speed" gutterBottom>
                         Speed (No. of operations per second)
                     </Typography>

@@ -1,6 +1,6 @@
 import React from "react";
 import {Chart} from "react-google-charts";
-import {Box, Grid} from "@material-ui/core";
+import {Box} from "@material-ui/core";
 
 class gameStatus extends React.Component {
     // constructor(props) {
@@ -49,17 +49,17 @@ class gameStatus extends React.Component {
                         <h1 align="center" style={{padding:"20px"}}> AI Game Learning </h1>
                         <div className="container-fluid">
                             <div className="row">
-                                <div class="col-sm" align="center">
+                                <div className="col-sm" align="center">
                                     <img src="/img/train3.png" style={{maxHeight: "300px"}} />
                                     <h3> Learning by </h3>
                                     <h3> Crowdsourcing </h3>
                                 </div>
-                                <div class="col-sm" align="center">
+                                <div className="col-sm" align="center">
                                     <img src="/img/train1.png" style={{maxHeight: "300px"}}/>
                                     <h3> One Human Player </h3>
                                     <h3> Training AI </h3>
                                 </div>
-                                <div class="col-sm" align="center">
+                                <div className="col-sm" align="center">
                                     <img src="/img/train2.png" style={{maxHeight: "300px"}}/>
                                     <h3> AI Training AI  </h3>
                                 </div>
@@ -71,32 +71,33 @@ class gameStatus extends React.Component {
                     <div className="container">
                         <div className="gameInfo" >
                             <h1 align="center"  style={{padding:"40px"}}> Learning by Crowdsourcing </h1>
-                            <h3> Real-Time Game Status</h3>
-                            <p> The line graph below shows the real-time result of Nemobot game AI. This game AI was trained by all players who played the game after 2021.
-                                You can also play this game and train the game AI through Nemobot on Facebook Messenger.</p>
                         </div>
+                            {/*<h3> Real-Time Game Status</h3>*/}
+                            {/*<p> The line graph below shows the real-time result of Nemobot game AI. This game AI was trained by all players who played the game after 2021.*/}
+                            {/*    You can also play this game and train the game AI through Nemobot on Facebook Messenger.</p>*/}
+
                         {/*<div className="container">*/}
                         {/*    <div className="game-board">*/}
                         {/*        <p> AI wins: {this.state.winTimes} </p>*/}
                         {/*        <p> Player wins: {this.state.loseTimes} </p>*/}
                         {/*    </div>*/}
                         {/*</div>*/}
-                        <div className="container">
-                            <div className={"AI-online-chart"}>
-                                <Chart
-                                    chartType="LineChart"
-                                    loader={<div>Loading Chart</div>}
-                                    data={this.state.chart}
-                                    width="100%"
-                                    height="400px"
-                                    legendToggle
-                                    options={this.options}
-                                />
-                            </div>
-                        </div>
+                        {/*<div className="container">*/}
+                        {/*    <div className={"AI-online-chart"}>*/}
+                        {/*        <Chart*/}
+                        {/*            chartType="LineChart"*/}
+                        {/*            loader={<div>Loading Chart</div>}*/}
+                        {/*            data={this.state.chart}*/}
+                        {/*            width="100%"*/}
+                        {/*            height="400px"*/}
+                        {/*            legendToggle*/}
+                        {/*            options={this.options}*/}
+                        {/*        />*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
                         <div className="container">
                             <div className="AI-demo1">
-                                <h3> Previous Result</h3>
+                                {/*<h3> Previous Result</h3>*/}
                                 <p>The line graph below shows the previous game result from Nemobot. Crowdsourced from ninety-eight students during the period 2020.10 - 2021.12.</p>
                                 <Chart
                                     chartType="LineChart"
@@ -170,15 +171,51 @@ class gameStatus extends React.Component {
                     <div className="container">
                         <h1 align="center" style={{padding:"40px"}}> AI Trained AI </h1>
                         <p>The line graph below shows the game result where the game AI trained by other game AIs. </p>
-                        {/*<Chart*/}
-                        {/*    chartType="LineChart"*/}
-                        {/*    loader={<div>Loading Chart</div>}*/}
-                        {/*    data={data_A1}*/}
-                        {/*    width="100%"*/}
-                        {/*    height="400px"*/}
-                        {/*    legendToggle*/}
-                        {/*    options={this.options}*/}
-                        {/*/>*/}
+                        <Chart
+                            chartType="LineChart"
+                            loader={<div>Loading Chart</div>}
+                            data={data_A1}
+                            width="100%"
+                            height="400px"
+                            legendToggle
+                            options={this.options}
+                        />
+                        <Chart
+                            chartType="LineChart"
+                            loader={<div>Loading Chart</div>}
+                            data={data_A2}
+                            width="100%"
+                            height="400px"
+                            legendToggle
+                            options={this.options}
+                        />
+                        <Chart
+                            chartType="LineChart"
+                            loader={<div>Loading Chart</div>}
+                            data={data_A3}
+                            width="100%"
+                            height="400px"
+                            legendToggle
+                            options={this.options}
+                        />
+                        <Chart
+                            chartType="LineChart"
+                            loader={<div>Loading Chart</div>}
+                            data={data_A4}
+                            width="100%"
+                            height="400px"
+                            legendToggle
+                            options={this.options}
+                        />
+                        <Chart
+                            chartType="LineChart"
+                            loader={<div>Loading Chart</div>}
+                            data={data_A5}
+                            width="100%"
+                            height="400px"
+                            legendToggle
+                            options={this.options}
+                        />
                     </div>
                 </Box>
             </div>
@@ -206,6 +243,8 @@ export const data_h4 = [["x","Ai's Training Outcome"],[0,0],[1,-1],[2,-2],[3,-3]
 export const data_h5 = [["x","Ai's Training Outcome"],[0,0],[1,-1],[2,-2],[3,-3],[4,-4],[5,-5],[6,-6],[7,-7],[8,-8],[9,-9],[10,-10],[11,-11],[12,-12],[13,-13],[14,-14],[15,-15],[16,-14],[17,-15],[18,-16],[19,-17],[20,-16],[21,-15],[22,-14],[23,-15],[24,-16],[25,-15],[26,-14],[27,-13],[28,-14],[29,-13],[30,-12],[31,-11],[32,-10],[33,-9],[34,-8],[35,-7],[36,-6],[37,-5],[38,-4],[39,-3],[40,-2],[41,-1],[42,0],[43,1],[44,2],[45,3],[46,4],[47,5],[48,6],[49,7],[50,8],[51,9],[52,10]]
 
 //with AI
-export const data_A1 = [["x","Ai's Training Outcome"],[0,0],[1,1],[2,0],[3,1],[4,2],[5,1],[6,0],[7,1],[8,0],[9,-1],[10,-2],[11,-3],[12,-2],[13,-1],[14,0],[15,-1],[16,-2],[17,-1],[18,0],[19,-1],[20,-2],[21,-1],[22,0],[23,1],[24,2],[25,1],[26,0],[27,1],[28,2],[29,3],[30,4],[31,5],[32,6],[33,7],[34,8],[35,9],[36,10],[37,9],[38,10],[39,9],[40,8],[41,9],[42,8],[43,7],[44,8],[45,9],[46,10],[47,9],[48,8],[49,9],[50,10],[51,11],[52,12],[53,13],[54,14],[55,15],[56,16],[57,17],[58,18],[59,19],[60,20],[61,21],[62,22],[63,23],[64,24],[65,23],[66,24],[67,25],[68,26],[69,27],[70,28],[71,29],[72,30],[73,31],[74,32],[75,33],[76,34],[77,35],[78,36],[79,37],[80,38],[81,39],[82,40],[83,41],[84,42],[85,43],[86,44],[87,45],[88,46],[89,47],[90,48],[91,49],[92,50],[93,51],[94,52],[95,53],[96,54],[97,55],[98,56],[99,57],[100,58],[101,59],[102,60]]
-
-
+export const data_A1 = [["x","Ai's Training Outcome"],[0,0],[1,1],[2,0],[3,1],[4,0],[5,-1],[6,0],[7,-1],[8,-2],[9,-1],[10,0],[11,-1],[12,0],[13,1],[14,0],[15,1],[16,0],[17,1],[18,0],[19,-1],[20,0],[21,1],[22,0],[23,1],[24,2],[25,3],[26,2],[27,1],[28,2],[29,3],[30,2],[31,3],[32,4],[33,5],[34,6],[35,5],[36,6],[37,7],[38,8],[39,7],[40,8],[41,7],[42,8],[43,9],[44,8],[45,7],[46,8],[47,9],[48,10],[49,11],[50,12],[51,13],[52,14],[53,15],[54,16],[55,17],[56,18],[57,19],[58,20],[59,21],[60,22]]
+export const data_A2 = [["x","Ai's Training Outcome"],[0,0],[1,1],[2,2],[3,1],[4,0],[5,1],[6,0],[7,-1],[8,0],[9,1],[10,2],[11,3],[12,2],[13,1],[14,2],[15,3],[16,2],[17,1],[18,0],[19,-1],[20,-2],[21,-1],[22,-2],[23,-1],[24,-2],[25,-1],[26,0],[27,1],[28,0],[29,-1],[30,-2],[31,-3],[32,-2],[33,-3],[34,-2],[35,-1],[36,-2],[37,-1],[38,0],[39,1],[40,2],[41,3],[42,2],[43,3],[44,4],[45,5],[46,6],[47,7],[48,8],[49,9],[50,10],[51,11],[52,12],[53,13],[54,14],[55,15],[56,16],[57,17],[58,18],[59,19],[60,20]]
+export const data_A3 = [["x","Ai's Training Outcome"],[0,0],[1,1],[2,2],[3,1],[4,2],[5,1],[6,2],[7,3],[8,2],[9,1],[10,0],[11,1],[12,2],[13,3],[14,2],[15,1],[16,0],[17,-1],[18,0],[19,-1],[20,-2],[21,-1],[22,-2],[23,-3],[24,-2],[25,-1],[26,-2],[27,-1],[28,0],[29,-1],[30,-2],[31,-3],[32,-2],[33,-1],[34,0],[35,-1],[36,0],[37,1],[38,2],[39,1],[40,2],[41,3],[42,4],[43,5],[44,6],[45,5],[46,6],[47,7],[48,6],[49,7],[50,8],[51,9],[52,10],[53,11],[54,12],[55,13],[56,14],[57,15],[58,16],[59,17],[60,18]]
+export const data_A4 = [["x","Ai's Training Outcome"],[0,0],[1,-1],[2,-2],[3,-1],[4,-2],[5,-1],[6,-2],[7,-1],[8,-2],[9,-1],[10,0],[11,1],[12,2],[13,1],[14,0],[15,-1],[16,0],[17,-1],[18,-2],[19,-3],[20,-2],[21,-3],[22,-2],[23,-1],[24,-2],[25,-3],[26,-4],[27,-3],[28,-4],[29,-3],[30,-2],[31,-3],[32,-2],[33,-3],[34,-2],[35,-1],[36,0],[37,1],[38,2],[39,3],[40,4],[41,5],[42,6],[43,7],[44,8],[45,9],[46,10],[47,11],[48,12],[49,13],[50,12],[51,13],[52,14],[53,15],[54,16],[55,17],[56,18],[57,19],[58,20],[59,21],[60,22]]
+export const data_A5 = [["x","Ai's Training Outcome"],[0,0],[1,-1],[2,0],[3,-1],[4,-2],[5,-1],[6,-2],[7,-3],[8,-4],[9,-5],[10,-4],[11,-3],[12,-2],[13,-1],[14,-2],[15,-3],[16,-4],[17,-3],[18,-2],[19,-1],[20,0],[21,1],[22,0],[23,1],[24,0],[25,1],[26,0],[27,1],[28,2],[29,3],[30,2],[31,1],[32,2],[33,1],[34,2],[35,3],[36,4],[37,5],[38,6],[39,7],[40,8],[41,9],[42,10],[43,9],[44,8],[45,7],[46,8],[47,9],[48,10],[49,11],[50,12],[51,13],[52,14],[53,15],[54,14],[55,15],[56,16],[57,17],[58,18],[59,19],[60,20]]

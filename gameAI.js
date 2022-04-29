@@ -65,7 +65,6 @@ function gamePlay(gameWeight){
             gameBoard.push(AI);
         }
         first = !first;
-        // console.log(coins);
         if(coins == 0){
             if(first) gameStatus["win"] = true;
             else gameStatus["win"] = false;
@@ -133,4 +132,4 @@ async function test(){
 }
 
 // test();
-randomPlayer();
+// randomPlayer();
