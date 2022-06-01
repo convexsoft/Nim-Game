@@ -97,15 +97,6 @@ class AI extends React.Component {
             weight.push(Array.from(tmp));
 
         let AIweight = JSON.parse(JSON.stringify(weight));
-        // for(i=0; i<pickup; i++){
-        //     tmp[i] = 0;
-        // }
-        // for(i=0; i<pickup; i++){
-        //     tmp[i] = 1;
-        //     AIweight.push(Array.from(tmp));
-        // }
-        // for(i=pickup; i<coins; i++)
-        //     AIweight.push(Array.from(tmp));
 
         if(this.state.start === true){
             this.stop();
@@ -136,7 +127,7 @@ class AI extends React.Component {
     update(pos, gameBoard, coins, weight, pickup, val, algo){
         let tmpcount;
         var i;
-        while(pos>0){
+        while(pos>0){ //no need to train the first step of the player; otherwise, change it to >=
             tmpcount = 0;
             for(i = 0; i<pickup; i++){
                 if(weight[coins[pos] - 1][i]>0){
@@ -182,8 +173,7 @@ class AI extends React.Component {
         console.log(gameBoard);
         console.log(coins);
 
-        //
-        if(AI) {//AI wins means the opposite take the last lollipop.
+        if(AI) {//AI wins == the opposite take the last lollipop.
            weight = this.update(pos-1, gameBoard, coins, weight, pickup, val, algo);
              if(opposite) AIweight = this.update(pos, gameBoard, coins, AIweight, pickup, AIval, algo);
         } else {
@@ -223,22 +213,15 @@ class AI extends React.Component {
         let pickup = this.state.pickup;
         let coins = this.state.coinstatus;
         let mxpickup = Math.min(pickup, coins);
-        let rand = this.state.randomPercentage;
         let tmprand = Math.floor(Math.random() * 10);
-        let res = 1;
-        if(this.state.opponent){
+        if(this.state.opponent){ //similar AI player
             return this.step(this.state.AIweight[coins - 1], coins, pickup);
         }
-        if(tmprand < rand){ //random
+        let res = (coins - 1) % (pickup + 1); // optimal solution
+        if(res === 0) {
             res = 1 + Math.floor(Math.random() * mxpickup);
-            console.log('AI random pick: ',res);
-        } else { //optimal 
-            res = (coins - 1) % (pickup + 1);
-            if(res === 0) {
-                res = 1 + Math.floor(Math.random() * mxpickup);
-            } //the lost situation
-            console.log('AI optimal pick: ',res);
         }
+        console.log('AI optimal pick: ',res);
         return res;
     }
 
@@ -355,6 +338,14 @@ class AI extends React.Component {
         let weight = this.state.weight;
         const opponent = this.state.opponent;
 
+        let lollypopsNo = [];
+        for(let i=9; i<=26; i++){
+            lollypopsNo.push(<option value={i}>{i}</option>);
+        }
+        let pickUpNo = [];
+        for(let i=2; i<=8; i++){
+            pickUpNo.push(<option value={i}>{i}</option>);
+        }
         return (
             <Container>
                 <Container>
@@ -369,9 +360,6 @@ class AI extends React.Component {
                 <Row>
                     <Col md={4}>
                         <h5> Data: </h5>
-
-                        {/* TODO: change to for loop */}
-                        {/* TODO: pickup should be smaller than lollipops */}
                         <FormControl style={{minWidth: 180, marginBottom: "5px"}}>
                             <InputLabel htmlFor="lollipopsNo">Number of Lollipops</InputLabel>
                             <Select
@@ -383,11 +371,7 @@ class AI extends React.Component {
                                 id: 'lollipopsNo',
                             }}
                             >
-                            <option value={9}>9</option>
-                            <option value={10}>10</option>
-                            <option value={11}>11</option>
-                            <option value={12}>12</option>
-                            <option value={13}>13</option>
+                                {lollypopsNo}
                             </Select>
                         </FormControl>
 
@@ -402,10 +386,7 @@ class AI extends React.Component {
                                 id: 'pickupSelect',
                             }}
                             >
-                            <option value={2}>2</option>
-                            <option value={3}>3</option>
-                            <option value={4}>4</option>
-                            <option value={5}>5</option>
+                                {pickUpNo}
                             </Select>
                         </FormControl>
 
@@ -420,7 +401,7 @@ class AI extends React.Component {
                                 id: 'pickupAlgorithm',
                             }}
                             >
-                            <option value={1}>Traditional Boxing Algorithm</option>
+                            <option value={1}>Donald Michie's Box Algorithm</option>
                             <option value={2}>Back Propagation Algorithm</option>
                             </Select>
                         </FormControl>
@@ -489,8 +470,8 @@ class AI extends React.Component {
                                     id: 'opponent'
                                 }}
                             >
-                                <option value={0}>Optimal / Random Game AI</option>
-                                <option value={1}>The Same Game AI</option>
+                                <option value={0}>Optimal Strategic Player</option>
+                                <option value={1}>Similar AI Player</option>
                             </Select>
                         </FormControl>
 
@@ -498,47 +479,23 @@ class AI extends React.Component {
                         <Button variant="contained" color="primary" onClick={(event) => this.handleClick(event,"val1")} style={{marginTop:"10px", marginBottom:"30px"}}> SetValue </Button>
                         </div>
 
-                        {(() => {
-                            if(opponent === 0){
-                            return <div>
-                                <Typography id="discrete-slider-random" gutterBottom>
-                                Random Percentage (AI: Optimal -> Random)
-                                </Typography>
-                                <Slider
-                                    onChange={(e,val)=>{
-                                        this.setState({
-                                            randomPercentage: val
-                                        });
-                                    }}
-                                    defaultValue={5}
-                                    getAriaValueText={this.valuetext1}
-                                    aria-labelledby="discrete-slider"
-                                    valueLabelDisplay="auto"
-                                    step={1}
-                                    marks
-                                    min={0}
-                                    max={10}
-                                />
-                            </div>
-                            }})()}
+                        <Typography id="discrete-slider-speed" gutterBottom>
+                            Speed (No. of operations per second)
+                        </Typography>
+                        <Slider onChange ={(e, val)=>this.handleChange(e, val)}
+                            defaultValue={1}
+                            getAriaValueText={this.valuetext}
+                            aria-labelledby="discrete-slider"
+                            valueLabelDisplay="auto"
+                            step={1}
+                            marks
+                            min={1}
+                            max={30}
+                        />
 
-                    <Typography id="discrete-slider-speed" gutterBottom>
-                        Speed (No. of operations per second)
-                    </Typography>
-                    <Slider onChange ={(e, val)=>this.handleChange(e, val)}
-                        defaultValue={1}
-                        getAriaValueText={this.valuetext}
-                        aria-labelledby="discrete-slider"
-                        valueLabelDisplay="auto"
-                        step={1}
-                        marks
-                        min={1}
-                        max={30}
-                    />
-
-                    <div>
-                    <Button variant="contained" color="primary" onClick={(event) => this.handleClick(event,"val2")}> {gameStatus} </Button>
-                    </div>
+                        <div>
+                        <Button variant="contained" color="primary" onClick={(event) => this.handleClick(event,"val2")}> {gameStatus} </Button>
+                        </div>
 
                     </Col>
                     <Col md={4}>

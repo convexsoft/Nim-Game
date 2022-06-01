@@ -51,7 +51,7 @@ class gameStatus extends React.Component {
                             <div className="row">
                                 <div className="col-sm" align="center">
                                     <img src="/img/train3.png" style={{maxHeight: "300px"}} />
-                                    <h3> Learning by </h3>
+                                    <h3> Training by </h3>
                                     <h3> Crowdsourcing </h3>
                                 </div>
                                 <div className="col-sm" align="center">
@@ -70,7 +70,7 @@ class gameStatus extends React.Component {
                 <Box maxWidth="100%" style={{margin:"40px"}}>
                     <div className="container">
                         <div className="gameInfo" >
-                            <h1 align="center"  style={{padding:"40px"}}> Learning by Crowdsourcing </h1>
+                            <h1 align="center"  style={{padding:"40px"}}> Training AI by Crowdsourcing </h1>
                         </div>
                             {/*<h3> Real-Time Game Status</h3>*/}
                             {/*<p> The line graph below shows the real-time result of Nemobot game AI. This game AI was trained by all players who played the game after 2021.*/}
@@ -98,7 +98,8 @@ class gameStatus extends React.Component {
                         <div className="container">
                             <div className="AI-demo1">
                                 {/*<h3> Previous Result</h3>*/}
-                                <p>The line graph below shows the previous game result from Nemobot. Crowdsourced from ninety-eight students during the period 2020.10 - 2021.12.</p>
+                                <p>The graphs below show the game outcome by crowdsourcing ninety-eight students to train the bot
+                                    using Donald Michie's reinforcement learning method in the period Oct 2020 - Dec 2021.</p>
                                 <Chart
                                     chartType="LineChart"
                                     loader={<div>Loading Chart</div>}
@@ -114,8 +115,9 @@ class gameStatus extends React.Component {
                 </Box>
                 <Box maxWidth="100%" style={{margin:"40px"}}>
                     <div className="container">
-                        <h1 align="center" style={{padding:"40px"}}>One Player Trained AI</h1>
-                        <p>The line graphs below show the game results where the game AI trained by one human player who used the optimal play strategy. </p>
+                        <h1 align="center" style={{padding:"40px"}}>Training AI by a Strategic Human Player</h1>
+                        <p>The graphs below show the game outcome when the AI is trained by one human player who plays
+                            the optimal strategy using Donald Michie's reinforcement learning method. </p>
                         <Chart
                             chartType="LineChart"
                             loader={<div>Loading Chart</div>}
@@ -169,8 +171,9 @@ class gameStatus extends React.Component {
                 </Box>
                 <Box maxWidth="100%" style={{margin:"40px"}}>
                     <div className="container">
-                        <h1 align="center" style={{padding:"40px"}}> AI Trained AI </h1>
-                        <p>The line graph below shows the game result where the game AI trained by other game AIs. </p>
+                        <h1 align="center" style={{padding:"40px"}}> Training AI by the Same AI </h1>
+                        <p>The graphs below show the game outcome by two AI's who both initially have no strategy
+                            and play probabilistically using Donald Michie's reinforcement learning method.</p>
                         <Chart
                             chartType="LineChart"
                             loader={<div>Loading Chart</div>}
