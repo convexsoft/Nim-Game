@@ -349,11 +349,16 @@ class AI extends React.Component {
         return (
             <Container>
                 <Container>
-                <h3> You can try Nim game AI here </h3>
+                <h3> Teach AI to play Nim </h3>
+                    <h5>Notes:</h5>
+                    <ul>
+                        <li key="n1">Remember to press SETVALUE after configuration.</li>
+                        <li key="n2">Press PAUSE to freeze simulation.</li>
+                    </ul>
                 <h5> Rules: </h5>
                 <p>Fish-Flavored Lollipops is a variant of Nim, an ancient math puzzle.</p>
-                <p>When the game starts, I will show you 13 lollipops, where the last one of them is fish-flavored. It tastes so disgusting that nobody wants to eat it.</p>
-                <p>The lollipops will be placed in one line, and you and I will take turns to take lollipops from the row. You can't take more than 3 lollipops at a time, and you can't skip your turn. Whoever takes the last lollipop (the fish-flavored one) lose the game.</p>
+                <p>When the game starts, I will show you N lollipops, where the last one of them is fish-flavored. It tastes so disgusting that nobody wants to eat it.</p>
+                <p>The lollipops will be placed in one line, and you and I will take turns to take lollipops from the row. You can't take more than X lollipops at a time, and you can't skip your turn. Whoever takes the last lollipop (the fish-flavored one) lose the game.</p>
                 <h1 style={{height:"40px"}}> {status} </h1>
                 </Container>
                 <Container>
@@ -361,7 +366,7 @@ class AI extends React.Component {
                     <Col md={4}>
                         <h5> Data: </h5>
                         <FormControl style={{minWidth: 180, marginBottom: "5px"}}>
-                            <InputLabel htmlFor="lollipopsNo">Number of Lollipops</InputLabel>
+                            <InputLabel htmlFor="lollipopsNo">Number of Lollipops (N)</InputLabel>
                             <Select
                             native
                             value={this.state.tmpcoins}
@@ -376,7 +381,7 @@ class AI extends React.Component {
                         </FormControl>
 
                         <FormControl style={{minWidth: 180, marginBottom: "5px"}}>
-                            <InputLabel htmlFor="pickupSelect">Maximal Pickup Number</InputLabel>
+                            <InputLabel htmlFor="pickupSelect">Maximal Pickup (X)</InputLabel>
                             <Select
                             native
                             value={this.state.tmppickup}
