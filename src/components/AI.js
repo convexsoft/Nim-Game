@@ -540,8 +540,8 @@ class AI extends React.Component {
                     <Col md={4}>
                     <h5>Game Results: </h5>
                     <div className="game-board">
-                        <p> AI wins: {this.state.win} </p>
-                        <p> Player wins: {this.state.lose} </p>
+                        <p> Second Player Wins: {this.state.win} </p>
+                        <p> First Player Wins: {this.state.lose} </p>
                     </div>
                     <div className="container">
                         <div className={"my-pretty-chart-container"}>
